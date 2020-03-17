@@ -293,9 +293,5 @@ namespace ATM
             }
         }
 
-        public void TestFunction()
-        {
-            Console.WriteLine("Hello World");
-        }
     }
 }
