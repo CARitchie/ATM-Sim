@@ -28,7 +28,7 @@ namespace ATM
 
         void MakeATM(Account[] ac)
         {
-            Application.Run(new Atm(ac));
+            Application.Run(new Bank(ac));
         }
     }
 }
