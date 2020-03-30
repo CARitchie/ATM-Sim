@@ -25,6 +25,5 @@ X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.Atm.resources
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.Bank.resources
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.Properties.Resources.resources
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
-X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.CoreCompileInputs.cache
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.exe
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.pdb
