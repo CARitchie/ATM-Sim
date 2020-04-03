@@ -39,7 +39,6 @@ namespace ATM
 
             thread1.Start();
             thread2.Start();
-
         }
     }
 }

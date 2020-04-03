@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -18,11 +19,11 @@ namespace ATM
         Account[] ac = new Account[3];
         Account account;
         Button[] controls;
+        public static Semaphore semaphore = new Semaphore(1, 2);                //semaphore declaration
 
         public Atm(Account[] array)
         {
             InitializeComponent();
-
             ac = array;
 
             controls = new Button[6] { Btn1, Btn2, Btn3, Btn4, Btn5, Btn6 };    // Add all menu buttons to an array
@@ -190,6 +191,8 @@ namespace ATM
         // Either changes the menu to withdraw or withdraws £10
         private void Btn1_Click(object sender, EventArgs e)
         {
+            semaphore.WaitOne();                //semaphore locks withdraw part of the code when the user access from one atm, so no other atms can cause race condition
+
             if (mode == 2)                      // If the system is in the basic menu
             {
                 ScreenClear();
@@ -291,6 +294,8 @@ namespace ATM
                 DisplayMenuOptions();                                               // Enable the basic menu
                 Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
             }
+            semaphore.Release();                                                    //semaphore is released when the 1st atm ends withdrawing money, so other atms can withdraw money as well
+
         }
 
     }

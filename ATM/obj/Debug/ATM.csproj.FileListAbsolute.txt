@@ -27,3 +27,14 @@ X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.Properties.Resources.resources
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.exe
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.pdb
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.csprojAssemblyReference.cache
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.Atm.resources
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.Bank.resources
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.Properties.Resources.resources
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.csproj.CoreCompileInputs.cache
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.exe
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.pdb
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\bin\Debug\ATM.exe.config
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\bin\Debug\ATM.exe
+C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\bin\Debug\ATM.pdb
