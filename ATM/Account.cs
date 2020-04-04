@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 
 namespace ATM
 {
@@ -83,6 +83,40 @@ namespace ATM
 
 
         /*
+        *   This funciton demonstrates Race Condition withdrawing of two
+        *   users withdrawing money from the same account at the same time.
+        *   The delay simulates this and allows a slight window for the users
+        *   to withdraw at the same time. If user 2 withdraws within 5 seconds
+        *   of user one then user1's transaction effectively gets overriden
+        *   and only user2's transaction will show on the account balance
+        *   
+        *   reurns:
+        *   true if the transactions if possible
+        *   false if there are insufficent funds in the account
+        */
+        public Boolean dataRaceDecrementBalance(int amount)
+        {
+            int tempBalance = balance;
+
+            if (tempBalance >= amount)
+            {
+                //delay here
+                Thread.Sleep(5000);
+                tempBalance -= amount;
+                this.balance = tempBalance;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
+
+        /*
+         *  [ CRAIGS DEFAULT DECREMENT BALANCE ]
+         *  
         *   This funciton allows us to decrement the balance of an account
         *   it perfomes a simple check to ensure the balance is greater tha
         *   the amount being debeted
@@ -91,7 +125,7 @@ namespace ATM
         *   true if the transactions if possible
         *   false if there are insufficent funds in the account
         */
-        public Boolean decrementBalance(int amount)
+        public Boolean semaphoreDecrementBalance(int amount)
         {
             if (this.balance >= amount)
             {

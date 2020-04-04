@@ -25,21 +25,37 @@ namespace ATM
             InitializeComponent();
         }
 
+        //handler for function that simulates semaphores
         private void button1_Click(object sender, EventArgs e)
+        {
+            Boolean dataRace = false;
+            runATMS(dataRace);
+        }
+
+        //handler for function that simulates data race
+        private void button2_Click(object sender, EventArgs e)
+        {
+            Boolean dataRace = true;
+            runATMS(dataRace);
+        }
+
+        //This function runs two ATMs based on whether data race is being
+        //simulated or not. The ATMs are run on separate threads so they
+        //run simultaneously.
+        private void runATMS(Boolean dataRace)
         {
             thread1 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts));
+                Application.Run(new Atm(accounts, dataRace));
             });
 
             thread2 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts));
+                Application.Run(new Atm(accounts, dataRace));
             });
 
             thread1.Start();
             thread2.Start();
-
         }
     }
 }

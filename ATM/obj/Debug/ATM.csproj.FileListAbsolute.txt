@@ -27,3 +27,13 @@ X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.Properties.Resources.resources
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.exe
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.pdb
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\bin\Debug\ATM.exe.config
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\bin\Debug\ATM.exe
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\bin\Debug\ATM.pdb
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.csprojAssemblyReference.cache
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.Atm.resources
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.Bank.resources
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.Properties.Resources.resources
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.exe
+C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.pdb

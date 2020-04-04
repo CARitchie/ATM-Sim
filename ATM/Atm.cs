@@ -18,12 +18,14 @@ namespace ATM
         Account[] ac = new Account[3];
         Account account;
         Button[] controls;
+        Boolean dataRace;
 
-        public Atm(Account[] array)
+        public Atm(Account[] array, Boolean newDataRace)
         {
             InitializeComponent();
 
             ac = array;
+            dataRace = newDataRace;
 
             controls = new Button[6] { Btn1, Btn2, Btn3, Btn4, Btn5, Btn6 };    // Add all menu buttons to an array
             EnableControls(false, 6);                                           // Disable all menu buttons
@@ -282,15 +284,33 @@ namespace ATM
         public void Withdraw(int amount)
         {
             ScreenClear();
-            if (!account.decrementBalance(amount))                                  // If the money could not be withdrawn
+            if (dataRace)
             {
-                Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
+                if (!account.dataRaceDecrementBalance(amount))                                  // If the money could not be withdrawn
+                {
+                    Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
+                }
+                else                                                                    // If the money was withdrawn
+                {
+                    DisplayMenuOptions();                                               // Enable the basic menu
+                    Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                }
             }
-            else                                                                    // If the money was withdrawn
+            else
             {
-                DisplayMenuOptions();                                               // Enable the basic menu
-                Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                if (!account.semaphoreDecrementBalance(amount))                                  // If the money could not be withdrawn
+                {
+                    Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
+                }
+                else                                                                    // If the money was withdrawn
+                {
+                    DisplayMenuOptions();                                               // Enable the basic menu
+                    Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                }
             }
+
+            
+            
         }
 
     }
