@@ -32,6 +32,17 @@ namespace ATM
 
             lastMessage = "Enter your account number:";
             Screen.Items.Add(lastMessage);
+
+
+            // Change the text of the form depending on whether a race condition is present
+            if (dataRace)
+            {
+                FindForm().Text = "ATM Race";
+            }
+            else
+            {
+                FindForm().Text = "ATM Semaphore";
+            }
         }
 
 
@@ -273,8 +284,12 @@ namespace ATM
         // Handler for the sixth menu button, returns to the basic menu
         private void Btn6_Click(object sender, EventArgs e)
         {
-            EnableControls(false, 6);                                               // Disables all menu buttons
-            DisplayMenuOptions();                                                   // Enables the basic menu
+            if(mode == 3)
+            {
+                EnableControls(false, 6);                                               // Disables all menu buttons
+                DisplayMenuOptions();                                                   // Enables the basic menu
+            }
+
         }
 
 
@@ -308,9 +323,6 @@ namespace ATM
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
                 }
             }
-
-            
-            
         }
 
     }
