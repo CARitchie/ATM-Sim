@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.BankLog = new System.Windows.Forms.ListBox();
             this.ClrBtn = new System.Windows.Forms.Button();
+            this.SaveBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button1
@@ -86,11 +87,22 @@
             this.ClrBtn.UseVisualStyleBackColor = true;
             this.ClrBtn.Click += new System.EventHandler(this.ClrBtn_Click);
             // 
+            // SaveBtn
+            // 
+            this.SaveBtn.Location = new System.Drawing.Point(457, 466);
+            this.SaveBtn.Name = "SaveBtn";
+            this.SaveBtn.Size = new System.Drawing.Size(75, 23);
+            this.SaveBtn.TabIndex = 5;
+            this.SaveBtn.Text = "Save Log";
+            this.SaveBtn.UseVisualStyleBackColor = true;
+            this.SaveBtn.Click += new System.EventHandler(this.SaveBtn_Click);
+            // 
             // Bank
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(800, 600);
+            this.Controls.Add(this.SaveBtn);
             this.Controls.Add(this.ClrBtn);
             this.Controls.Add(this.BankLog);
             this.Controls.Add(this.label1);
@@ -110,6 +122,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ListBox BankLog;
         private System.Windows.Forms.Button ClrBtn;
+        private System.Windows.Forms.Button SaveBtn;
     }
 }
 

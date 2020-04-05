@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -98,7 +99,26 @@ namespace ATM
             BankLog.Items.Clear();
         }
 
+        // Method to save the log to a file
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            string FilePath = Path.GetFullPath("BankLog (" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ").txt");
+            FileInfo f = new FileInfo(FilePath);
+            StreamWriter w = f.CreateText();
 
+            for (int i = 0; i < BankLog.Items.Count; i++)
+            {
+                w.WriteLine(BankLog.Items[i]);
+            }
+
+            w.Close();
+
+            MessageBox.Show("Bank log has been saved to " + FilePath, "File Information");
+        }
+
+        // Method to add text to the bank log
+        // Parameters:
+        //      TextToAdd - the text to be added to the log
         public void AddToLog(String TextToAdd)
         {
             this.Invoke((MethodInvoker)(() => BankLog.Items.Add(DateTime.Now.ToString() + "    " + TextToAdd)));
