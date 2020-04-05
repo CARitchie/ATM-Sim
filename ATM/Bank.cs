@@ -29,7 +29,8 @@ namespace ATM
         private void button1_Click(object sender, EventArgs e)
         {
             Boolean dataRace = false;
-            if (GetThreadActive())
+            
+            if (GetThreadActive())              // If any ATMs are still running
             {
                 MessageBox.Show("Please close existing ATMs", "Warning");
             }
@@ -44,7 +45,8 @@ namespace ATM
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean dataRace = true;
-            if (GetThreadActive())
+            
+            if (GetThreadActive())              // If any ATMs are still running
             {
                 MessageBox.Show("Please close existing ATMs", "Warning");
             }
@@ -61,12 +63,12 @@ namespace ATM
         {
             thread1 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts, dataRace));
+                Application.Run(new Atm(accounts, dataRace,this,"ATM1"));
             });
 
             thread2 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts, dataRace));
+                Application.Run(new Atm(accounts, dataRace,this,"ATM2"));
             });
 
             thread1.Start();
@@ -89,6 +91,17 @@ namespace ATM
                 }
             }
             return false;
+        }
+
+        private void ClrBtn_Click(object sender, EventArgs e)
+        {
+            BankLog.Items.Clear();
+        }
+
+
+        public void AddToLog(String TextToAdd)
+        {
+            this.Invoke((MethodInvoker)(() => BankLog.Items.Add(DateTime.Now.ToString() + "    " + TextToAdd)));
         }
     }
 }
