@@ -37,3 +37,4 @@ C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.P
 C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.csproj.GenerateResource.cache
 C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.exe
 C:\Users\sheph\Documents\Uni\Computer Systems 2B\ATM\ATM-Sim\ATM\obj\Debug\ATM.pdb
+X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.CoreCompileInputs.cache
