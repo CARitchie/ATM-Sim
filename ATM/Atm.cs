@@ -101,6 +101,8 @@ namespace ATM
                 mode = 1;                                       // Tell the system that a pin number is expected
                 lastMessage = "Enter your pin number:";         // Change the value of lastMessage
                 Screen.Items.Add(lastMessage);                  // Ask the user to enter their pin
+                EnableControls(true, 1);
+                Btn1.Text = "Exit";
             }
         }
 
@@ -203,7 +205,16 @@ namespace ATM
         // Either changes the menu to withdraw or withdraws £10
         private void Btn1_Click(object sender, EventArgs e)
         {
-            if (mode == 2)                      // If the system is in the basic menu
+            if(mode == 1)
+            {
+                EnableControls(false, 1);                                           // Disable all menu buttons
+                Screen.Items.Clear();
+                Screen.Items.Add("Returning card. Goodbye!");
+                lastMessage = "Enter your account number:";
+                Screen.Items.Add(lastMessage);
+                mode = 0;
+            }
+            else if (mode == 2)                      // If the system is in the basic menu
             {
                 ScreenClear();
                 mode = 3;                       // Tell the system that it is in the withdraw menu
