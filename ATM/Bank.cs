@@ -29,14 +29,29 @@ namespace ATM
         private void button1_Click(object sender, EventArgs e)
         {
             Boolean dataRace = false;
-            runATMS(dataRace);
+            if (GetThreadActive())
+            {
+                MessageBox.Show("Please close existing ATMs", "Warning");
+            }
+            else
+            {
+                runATMS(dataRace);
+            }
+            
         }
 
         //handler for function that simulates data race
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean dataRace = true;
-            runATMS(dataRace);
+            if (GetThreadActive())
+            {
+                MessageBox.Show("Please close existing ATMs", "Warning");
+            }
+            else
+            {
+                runATMS(dataRace);
+            }
         }
 
         //This function runs two ATMs based on whether data race is being
@@ -56,6 +71,24 @@ namespace ATM
 
             thread1.Start();
             thread2.Start();
+        }
+
+
+        // Method to detect whether any ATMs are running
+        bool GetThreadActive()
+        {
+            if(thread1 != null && thread2 != null)
+            {
+                if(thread1.IsAlive || thread2.IsAlive)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
     }
 }
