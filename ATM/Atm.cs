@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -19,19 +19,34 @@ namespace ATM
         Account account;
         Button[] controls;
         Boolean dataRace;
+        Bank bank;
+        string name;
 
-        public Atm(Account[] array, Boolean newDataRace)
+        public Atm(Account[] array, Boolean newDataRace, Bank newBank, string newName)
         {
             InitializeComponent();
 
             ac = array;
             dataRace = newDataRace;
+            bank = newBank;
 
             controls = new Button[6] { Btn1, Btn2, Btn3, Btn4, Btn5, Btn6 };    // Add all menu buttons to an array
             EnableControls(false, 6);                                           // Disable all menu buttons
 
             lastMessage = "Enter your account number:";
             Screen.Items.Add(lastMessage);
+
+
+            // Change the text of the form depending on whether a race condition is present
+            if (dataRace)
+            {
+                name = newName + " Race";
+            }
+            else
+            {
+                name = newName + " Semaphore";
+            }
+            FindForm().Text = name;
         }
 
 
@@ -90,6 +105,10 @@ namespace ATM
                 mode = 1;                                       // Tell the system that a pin number is expected
                 lastMessage = "Enter your pin number:";         // Change the value of lastMessage
                 Screen.Items.Add(lastMessage);                  // Ask the user to enter their pin
+                EnableControls(true, 1);
+                Btn1.Text = "Exit";
+
+                MessageBank(account.getAccountNum() + " entered their account number");
             }
         }
 
@@ -107,12 +126,18 @@ namespace ATM
                     if (ac[i].GetLocked())                      // If the account is locked
                     {
                         Screen.Items.Add("Account is locked");  // Tell the user that the account is locked
+
+                        MessageBank("Attempt to access " + ac[i].getAccountNum() + "'s account");
+
                         return null;
                     }
                     return ac[i];                               // Return the correct account
                 }
             }
             Screen.Items.Add("Incorrect account number");       // Tell the user that the entered number is not an account
+
+            MessageBank("Attempt to access non-existent account " + input);
+
             return null;                                        // Return an empty account
         }
 
@@ -123,6 +148,8 @@ namespace ATM
             if (account.checkPin(Int32.Parse(userInput)))       // Convert userInput to an int and compare against the real pin
             {
                 DisplayMenuOptions();
+
+                MessageBank(account.getAccountNum() + " entered their pin number");
             }
             else                                                // If the pin wasn't valid                    
             {
@@ -130,6 +157,9 @@ namespace ATM
                 Screen.Items.Add(lastMessage);                  // Add back the last message
                 Screen.Items.Add("Incorrect pin");              // Tell the user that the pin was incorrect
                 userInput = "";
+
+                MessageBank(account.getAccountNum() + " entered an incorrect pin");
+
                 if (account.CheckFail())                        // Check if the account has been incorrectly accessed too many times
                 {
                     Screen.Items.Clear();
@@ -137,6 +167,8 @@ namespace ATM
                     lastMessage = "Enter your account number:";
                     Screen.Items.Add(lastMessage);
                     mode = 0;                                   // Tell the system that an account number is expected
+
+                    MessageBank(account.getAccountNum() + "'s account has been locked");
                 }
             }
         }
@@ -187,11 +219,28 @@ namespace ATM
         }
 
 
+        public void RemoveCard()
+        {
+            EnableControls(false, 6);                                           // Disable all menu buttons
+            Screen.Items.Clear();
+            Screen.Items.Add("Returning card. Goodbye!");
+            lastMessage = "Enter your account number:";
+            Screen.Items.Add(lastMessage);
+            mode = 0;
+            userInput = "";
+            MessageBank(account.getAccountNum() + " removed their card");
+        }
+
+
         // Handler for the first menu button
         // Either changes the menu to withdraw or withdraws £10
         private void Btn1_Click(object sender, EventArgs e)
         {
-            if (mode == 2)                      // If the system is in the basic menu
+            if(mode == 1)
+            {
+                RemoveCard();
+            }
+            else if (mode == 2)                      // If the system is in the basic menu
             {
                 ScreenClear();
                 ScreenClear();
@@ -207,9 +256,9 @@ namespace ATM
                 Btn5.Text = "£500";
                 Btn6.Text = "Back";
             }
-            else if (mode == 3)                 // Else if the system is in the withdraw menu
+            else if (mode == 3)                     // Else if the system is in the withdraw menu
             {
-                Withdraw(10);                   // Withdraw £10
+                Withdraw(10);                       // Withdraw £10
             }
         }
 
@@ -222,6 +271,8 @@ namespace ATM
             {
                 ScreenClear();
                 Screen.Items.Add("Account Balance £" + account.getBalance());       // Display the balance
+
+                MessageBank(account.getAccountNum() + " checked their balance");
             }
             else if (mode == 3)                                                     // Else if the system is in the withdraw menu
             {
@@ -237,12 +288,7 @@ namespace ATM
         {
             if(mode == 2)                                                           // If the system is in the basic menu
             {
-                EnableControls(false, 6);                                           // Disable all menu buttons
-                Screen.Items.Clear();
-                Screen.Items.Add("Returning card. Goodbye!");
-                lastMessage = "Enter your account number:";
-                Screen.Items.Add(lastMessage);
-                mode = 0;                                                           // Tell the system that an account number is expected
+                RemoveCard();                                                        // Tell the system that an account number is expected
             }
             else if (mode == 3)                                                     // Else if the system is in the withdraw menu
             {
@@ -275,8 +321,12 @@ namespace ATM
         // Handler for the sixth menu button, returns to the basic menu
         private void Btn6_Click(object sender, EventArgs e)
         {
-            EnableControls(false, 6);                                               // Disables all menu buttons
-            DisplayMenuOptions();                                                   // Enables the basic menu
+            if(mode == 3)
+            {
+                EnableControls(false, 6);                                               // Disables all menu buttons
+                DisplayMenuOptions();                                                   // Enables the basic menu
+            }
+
         }
 
 
@@ -291,6 +341,8 @@ namespace ATM
                 if (!account.dataRaceDecrementBalance(amount))                                  // If the money could not be withdrawn
                 {
                     Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
+
+                    MessageBank(account.getAccountNum() + " attempted to withdraw £" + amount);
                 }
                 else                                                                    // If the money was withdrawn
                 {
@@ -300,6 +352,8 @@ namespace ATM
                     Screen.Items.Add("Please check balance");
                     Console.WriteLine(amount + "£ have been withdrawed");
 
+                    MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
+
                 }
             }
             else
@@ -307,6 +361,8 @@ namespace ATM
                 if (!account.semaphoreDecrementBalance(amount))                                  // If the money could not be withdrawn
                 {
                     Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
+
+                    MessageBank(account.getAccountNum() + " attempted to withdraw £" + amount);
                 }
                 else                                                                    // If the money was withdrawn
                 {
@@ -315,11 +371,19 @@ namespace ATM
                     Screen.Items.Add("Race condition was avoided");
                     Screen.Items.Add("Please check balance");
                     Console.WriteLine(amount + "£ have been withdrawed");
+
+                    MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
+
                 }
             }
+        }
 
-            
-            
+        // Method to send a log item to the bank computer
+        // Parameters:
+        //      text - the desired message to be sent
+        public void MessageBank(string text)
+        {
+            bank.AddToLog(name + "    " + text);        // Sends the bank the name of the atm and the desired message
         }
 
     }

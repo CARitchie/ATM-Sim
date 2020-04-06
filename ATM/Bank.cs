@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -30,14 +31,31 @@ namespace ATM
         private void button1_Click(object sender, EventArgs e)
         {
             Boolean dataRace = false;
-            runATMS(dataRace);
+            
+            if (GetThreadActive())              // If any ATMs are still running
+            {
+                MessageBox.Show("Please close existing ATMs", "Warning");
+            }
+            else
+            {
+                runATMS(dataRace);
+            }
+            
         }
 
         //handler for function that simulates data race
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean dataRace = true;
-            runATMS(dataRace);
+            
+            if (GetThreadActive())              // If any ATMs are still running
+            {
+                MessageBox.Show("Please close existing ATMs", "Warning");
+            }
+            else
+            {
+                runATMS(dataRace);
+            }
         }
 
         //This function runs two ATMs based on whether data race is being
@@ -47,16 +65,64 @@ namespace ATM
         {
             thread1 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts, dataRace));
+                Application.Run(new Atm(accounts, dataRace,this,"ATM1"));
             });
 
             thread2 = new Thread(() =>
             {
-                Application.Run(new Atm(accounts, dataRace));
+                Application.Run(new Atm(accounts, dataRace,this,"ATM2"));
             });
 
             thread1.Start();
             thread2.Start();
+        }
+
+
+        // Method to detect whether any ATMs are running
+        bool GetThreadActive()
+        {
+            if(thread1 != null && thread2 != null)
+            {
+                if(thread1.IsAlive || thread2.IsAlive)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
+        }
+
+        private void ClrBtn_Click(object sender, EventArgs e)
+        {
+            BankLog.Items.Clear();
+        }
+
+        // Method to save the log to a file
+        private void SaveBtn_Click(object sender, EventArgs e)
+        {
+            string FilePath = Path.GetFullPath("BankLog (" + DateTime.Now.ToString("yyyy-MM-dd HH-mm-ss") + ").txt");
+            FileInfo f = new FileInfo(FilePath);
+            StreamWriter w = f.CreateText();
+
+            for (int i = 0; i < BankLog.Items.Count; i++)
+            {
+                w.WriteLine(BankLog.Items[i]);
+            }
+
+            w.Close();
+
+            MessageBox.Show("Bank log has been saved to " + FilePath, "File Information");
+        }
+
+        // Method to add text to the bank log
+        // Parameters:
+        //      TextToAdd - the text to be added to the log
+        public void AddToLog(String TextToAdd)
+        {
+            this.Invoke((MethodInvoker)(() => BankLog.Items.Add(DateTime.Now.ToString() + "    " + TextToAdd)));
         }
     }
 }
