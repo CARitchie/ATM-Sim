@@ -154,7 +154,6 @@ namespace ATM
             }
         }
 
-
         // Method to display the basic menu
         public void DisplayMenuOptions()
         {
@@ -195,6 +194,9 @@ namespace ATM
             if (mode == 2)                      // If the system is in the basic menu
             {
                 ScreenClear();
+                ScreenClear();
+                ScreenClear();
+
                 mode = 3;                       // Tell the system that it is in the withdraw menu
                 EnableControls(true, 6);        // Enable all menu buttons
 
@@ -294,6 +296,10 @@ namespace ATM
                 {
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                    Screen.Items.Add("Race condition could happened");
+                    Screen.Items.Add("Please check balance");
+                    Console.WriteLine(amount + "£ have been withdrawed");
+
                 }
             }
             else
@@ -306,6 +312,9 @@ namespace ATM
                 {
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                    Screen.Items.Add("Race condition was avoided");
+                    Screen.Items.Add("Please check balance");
+                    Console.WriteLine(amount + "£ have been withdrawed");
                 }
             }
 

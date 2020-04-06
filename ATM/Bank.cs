@@ -17,6 +17,7 @@ namespace ATM
 
         Thread thread1;
         Thread thread2;
+
         public Bank()
         {
             accounts[0] = new Account(300, 1111, 111111);

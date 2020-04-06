@@ -13,6 +13,9 @@ namespace ATM
         private int accountNum;
         private int fails;              // Number of times that an incorrect pin has been entered
         private bool locked = false;
+        public static Semaphore semaphore = new Semaphore(1, 2);
+
+
 
         // a constructor that takes initial values for each of the attributes (balance, pin, accountNumber)
         public Account(int balance, int pin, int accountNum)
@@ -117,25 +120,49 @@ namespace ATM
         /*
          *  [ CRAIGS DEFAULT DECREMENT BALANCE ]
          *  
-        *   This funciton allows us to decrement the balance of an account
-        *   it perfomes a simple check to ensure the balance is greater tha
-        *   the amount being debeted
+        *   This function allows us to decrement the balance of an account
+        *   it perfomes a simple check to ensure the balance is greater than
+        *   the amount being debeted.
+        *   It also makes use of semaphores to avoid race condition
         *   
         *   reurns:
         *   true if the transactions if possible
         *   false if there are insufficent funds in the account
-        */
+        
         public Boolean semaphoreDecrementBalance(int amount)
         {
+            semaphore.WaitOne();
             if (this.balance >= amount)
             {
                 balance -= amount;
+                semaphore.Release();
                 return true;
             }
             else
             {
+                semaphore.Release();
                 return false;
             }
+        }
+        */
+
+        public Boolean semaphoreDecrementBalance(int amount)
+        {
+	        semaphore.WaitOne();
+	        int tempBalance = balance;
+
+	        if( tempBalance >= amount){
+		        Thread.Sleep(5000);
+		        tempBalance -= amount;
+		        this.balance = tempBalance;
+		        semaphore.Release();
+		        return true;
+	        }
+            else
+            {
+		        semaphore.Release();
+		        return false;
+	        }
         }
     }
 }
