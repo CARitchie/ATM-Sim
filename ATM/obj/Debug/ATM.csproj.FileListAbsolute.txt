@@ -49,4 +49,3 @@ C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.csproj.CoreCom
 C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.exe
 C:\Users\alvar\Documents\projectsvs2019\ATM-Sim\ATM\obj\Debug\ATM.pdb
 X:\University\AC22005\ATM-Sim\ATM\obj\Debug\ATM.csproj.CoreCompileInputs.cache
-
