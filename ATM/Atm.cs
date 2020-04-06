@@ -342,6 +342,7 @@ namespace ATM
             {
                 if (!account.dataRaceDecrementBalance(amount))                                  // If the money could not be withdrawn
                 {
+                    ScreenClear();
                     Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
 
                     MessageBank(account.getAccountNum() + " attempted to withdraw £" + amount);
@@ -360,8 +361,9 @@ namespace ATM
             }
             else
             {
-                if (!account.semaphoreDecrementBalance(amount))                                  // If the money could not be withdrawn
+                if (!account.semaphoreDecrementBalance(amount))                         // If the money could not be withdrawn
                 {
+                    ScreenClear();
                     Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
 
                     MessageBank(account.getAccountNum() + " attempted to withdraw £" + amount);

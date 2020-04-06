@@ -340,6 +340,8 @@
             this.Controls.Add(this.pictureBox4);
             this.Controls.Add(this.pictureBox5);
             this.Controls.Add(this.pictureBox6);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Atm";
             this.Text = "ATM";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
