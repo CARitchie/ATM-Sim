@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -186,7 +186,6 @@ namespace ATM
             }
         }
 
-
         // Method to display the basic menu
         public void DisplayMenuOptions()
         {
@@ -241,13 +240,16 @@ namespace ATM
             {
                 RemoveCard();
             }
-            else if (mode == 2)                     // If the system is in the basic menu
+            else if (mode == 2)                      // If the system is in the basic menu
             {
                 ScreenClear();
-                mode = 3;                           // Tell the system that it is in the withdraw menu
-                EnableControls(true, 6);            // Enable all menu buttons
+                ScreenClear();
+                ScreenClear();
 
-                Btn1.Text = "£10";                  // Set the menu button text
+                mode = 3;                       // Tell the system that it is in the withdraw menu
+                EnableControls(true, 6);        // Enable all menu buttons
+
+                Btn1.Text = "£10";              // Set the menu button text
                 Btn2.Text = "£20";
                 Btn3.Text = "£40";
                 Btn4.Text = "£100";
@@ -346,8 +348,12 @@ namespace ATM
                 {
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                    Screen.Items.Add("Race condition could happened");
+                    Screen.Items.Add("Please check balance");
+                    Console.WriteLine(amount + "£ have been withdrawed");
 
                     MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
+
                 }
             }
             else
@@ -362,7 +368,12 @@ namespace ATM
                 {
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
+                    Screen.Items.Add("Race condition was avoided");
+                    Screen.Items.Add("Please check balance");
+                    Console.WriteLine(amount + "£ have been withdrawed");
+
                     MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
+
                 }
             }
         }
