@@ -93,9 +93,9 @@ namespace ATM
         *   of user one then user1's transaction effectively gets overriden
         *   and only user2's transaction will show on the account balance
         *   
-        *   reurns:
-        *   true if the transactions if possible
-        *   false if there are insufficent funds in the account
+        *   returns:
+        *   true if the transaction is possible
+        *   false if there are insufficient funds in the account
         */
         public Boolean dataRaceDecrementBalance(int amount)
         {
@@ -115,37 +115,9 @@ namespace ATM
             }
         }
 
-
-
-        /*
-         *  [ CRAIGS DEFAULT DECREMENT BALANCE ]
-         *  
-        *   This function allows us to decrement the balance of an account
-        *   it perfomes a simple check to ensure the balance is greater than
-        *   the amount being debeted.
-        *   It also makes use of semaphores to avoid race condition
-        *   
-        *   reurns:
-        *   true if the transactions if possible
-        *   false if there are insufficent funds in the account
-        
-        public Boolean semaphoreDecrementBalance(int amount)
-        {
-            semaphore.WaitOne();
-            if (this.balance >= amount)
-            {
-                balance -= amount;
-                semaphore.Release();
-                return true;
-            }
-            else
-            {
-                semaphore.Release();
-                return false;
-            }
-        }
-        */
-
+        // Method to decrement the balance with semaphores to prevent a race condition
+        // Parameters:
+        //      amount - the amount of money to withdraw
         public Boolean semaphoreDecrementBalance(int amount)
         {
 	        semaphore.WaitOne();
