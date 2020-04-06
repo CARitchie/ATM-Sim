@@ -336,6 +336,8 @@ namespace ATM
         public void Withdraw(int amount)
         {
             ScreenClear();
+            Screen.Items.Add("Please Wait...");
+            Screen.Refresh();
             if (dataRace)
             {
                 if (!account.dataRaceDecrementBalance(amount))                                  // If the money could not be withdrawn
