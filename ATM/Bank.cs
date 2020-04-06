@@ -27,7 +27,7 @@ namespace ATM
             InitializeComponent();
         }
 
-        //handler for function that simulates semaphores
+        // handler for function that simulates race condition with semaphores
         private void button1_Click(object sender, EventArgs e)
         {
             Boolean dataRace = false;
@@ -43,7 +43,7 @@ namespace ATM
             
         }
 
-        //handler for function that simulates data race
+        // handler for function that simulates race condition 
         private void button2_Click(object sender, EventArgs e)
         {
             Boolean dataRace = true;
@@ -79,6 +79,7 @@ namespace ATM
 
 
         // Method to detect whether any ATMs are running
+        // Returns true if an ATM is active
         bool GetThreadActive()
         {
             if(thread1 != null && thread2 != null)
@@ -107,9 +108,9 @@ namespace ATM
             FileInfo f = new FileInfo(FilePath);
             StreamWriter w = f.CreateText();
 
-            for (int i = 0; i < BankLog.Items.Count; i++)
+            for (int i = 0; i < BankLog.Items.Count; i++)               // Loop through all items in the bank log
             {
-                w.WriteLine(BankLog.Items[i]);
+                w.WriteLine(BankLog.Items[i]);                          // Write the item to a file
             }
 
             w.Close();
