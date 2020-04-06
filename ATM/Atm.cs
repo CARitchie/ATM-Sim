@@ -37,8 +37,7 @@ namespace ATM
             Screen.Items.Add(lastMessage);
 
 
-            // Change the text of the form depending on whether a race condition is present
-            if (dataRace)
+            if (dataRace)                                   // Set variable "name" equal to atm number plus whether a race condition is present
             {
                 name = newName + " Race";
             }
@@ -46,7 +45,7 @@ namespace ATM
             {
                 name = newName + " Semaphore";
             }
-            FindForm().Text = name;
+            FindForm().Text = name;                         // Change the name of the current form
         }
 
 
@@ -105,7 +104,7 @@ namespace ATM
                 mode = 1;                                       // Tell the system that a pin number is expected
                 lastMessage = "Enter your pin number:";         // Change the value of lastMessage
                 Screen.Items.Add(lastMessage);                  // Ask the user to enter their pin
-                EnableControls(true, 1);
+                EnableControls(true, 1);                        // Enable an exit button
                 Btn1.Text = "Exit";
 
                 MessageBank(account.getAccountNum() + " entered their account number");
@@ -213,12 +212,12 @@ namespace ATM
                 controls[i].Enabled = val;          // Enable or disable the button
                 if (!val)                           // If it is being disabled
                 {
-                    controls[i].Text = "";          // Clear the buttons text
+                    controls[i].Text = "";          // Clear the button's text
                 }
             }
         }
 
-
+        // Method to log a user out of an ATM
         public void RemoveCard()
         {
             EnableControls(false, 6);                                           // Disable all menu buttons
@@ -226,7 +225,7 @@ namespace ATM
             Screen.Items.Add("Returning card. Goodbye!");
             lastMessage = "Enter your account number:";
             Screen.Items.Add(lastMessage);
-            mode = 0;
+            mode = 0;                                                           // Tell the system to expect an account number
             userInput = "";
             MessageBank(account.getAccountNum() + " removed their card");
         }
@@ -242,14 +241,13 @@ namespace ATM
             }
             else if (mode == 2)                      // If the system is in the basic menu
             {
-                ScreenClear();
-                ScreenClear();
-                ScreenClear();
+                Screen.Items.Clear();
+                Screen.Items.Add(lastMessage);
 
-                mode = 3;                       // Tell the system that it is in the withdraw menu
-                EnableControls(true, 6);        // Enable all menu buttons
+                mode = 3;                           // Tell the system that it is in the withdraw menu
+                EnableControls(true, 6);            // Enable all menu buttons
 
-                Btn1.Text = "£10";              // Set the menu button text
+                Btn1.Text = "£10";                  // Set the menu button text
                 Btn2.Text = "£20";
                 Btn3.Text = "£40";
                 Btn4.Text = "£100";
@@ -269,7 +267,8 @@ namespace ATM
         {
             if(mode == 2)                                                           // If the system is in the basic menu
             {
-                ScreenClear();
+                Screen.Items.Clear();
+                Screen.Items.Add(lastMessage);
                 Screen.Items.Add("Account Balance £" + account.getBalance());       // Display the balance
 
                 MessageBank(account.getAccountNum() + " checked their balance");
@@ -288,7 +287,7 @@ namespace ATM
         {
             if(mode == 2)                                                           // If the system is in the basic menu
             {
-                RemoveCard();                                                        // Tell the system that an account number is expected
+                RemoveCard();
             }
             else if (mode == 3)                                                     // Else if the system is in the withdraw menu
             {
@@ -338,9 +337,9 @@ namespace ATM
             ScreenClear();
             Screen.Items.Add("Please Wait...");
             Screen.Refresh();
-            if (dataRace)
+            if (dataRace)                                                               // If a race condition can occur
             {
-                if (!account.dataRaceDecrementBalance(amount))                                  // If the money could not be withdrawn
+                if (!account.dataRaceDecrementBalance(amount))                          // If the money could not be withdrawn
                 {
                     ScreenClear();
                     Screen.Items.Add("Insufficient funds");                             // Tell the user that they do not have enough money
@@ -351,15 +350,15 @@ namespace ATM
                 {
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
-                    Screen.Items.Add("Race condition could happened");
+                    Screen.Items.Add("Race condition is possible");
                     Screen.Items.Add("Please check balance");
-                    Console.WriteLine(amount + "£ have been withdrawed");
+                    Console.WriteLine("£" + amount + " has been withdrawn");
 
                     MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
 
                 }
             }
-            else
+            else                                                                        // If a race condition should not occur
             {
                 if (!account.semaphoreDecrementBalance(amount))                         // If the money could not be withdrawn
                 {
@@ -373,8 +372,7 @@ namespace ATM
                     DisplayMenuOptions();                                               // Enable the basic menu
                     Screen.Items.Add("Withdrawing £" + amount);                         // Tell the user that their money is being withdrawn
                     Screen.Items.Add("Race condition was avoided");
-                    Screen.Items.Add("Please check balance");
-                    Console.WriteLine(amount + "£ have been withdrawed");
+                    Console.WriteLine("£" + amount + " has been withdrawn");
 
                     MessageBank(account.getAccountNum() + " withdrew £" + amount + ". Their balance is now £" + account.getBalance());
 
